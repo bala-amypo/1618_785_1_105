@@ -30,18 +30,29 @@ public class Host{
     public void sethostname(String hostname){
         this.hostname=hostname;
     }
-    public 
+    public String getFullname(){
+        return fullname;
+    }
+    public void setfullname(String fullname){
+        this.fullname=fullname;
+    } 
     public String getEmail(){
         return email;
     }
     public void setEmail(String Email){
         this.email=email;
     }
+    public String getDepartment(){
+        return department;
+    }
+    public void setDepartment(String Department){
+        this.department=department;
+    }
     public String getPhone(){
         return phone;
     }
-    public void setPhone(String Phone){
-        this.phone=phone;
+    public void setPhone(String Department){
+        this.department=department;
     }
     public LocalDateTime getCreatedAt(){
         return createdAt;
