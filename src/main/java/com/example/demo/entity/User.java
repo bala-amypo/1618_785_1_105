@@ -40,23 +40,12 @@ public class User{
     public void setPhone(String Phone){
         this.phone=phone;
     }
-    public String getIdProofNumber(){
-        return idProofNumber;
-    }
-    public void setIdProofNumber(String IdProofNumber){
-        this.idproofnumber=idproofnumber;
-    }
-
-    }
-    }
-
-    }
-    }
-    }
-    }
-    }
-    }
-    }
-    }
-
-}
+    public LocalDateTime getCreatedAt(){
+        return createdAt;
+        }
+    public void setCreatedAt(LocalDateTime createdAt){
+        this.createdAt=createdAt;
+        
+        }
+     }
+    
