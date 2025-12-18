@@ -35,7 +35,14 @@ public class User{
         this.email=email;
     }
     public String getPhone(){
-        return 
+        return phone;
+    }
+    public void setPhone(String Phone){
+        this.phone=phone;
+    }
+    public LocalDateTime get
+    }
+
     }
     }
     }
