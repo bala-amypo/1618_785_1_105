@@ -22,7 +22,25 @@ public class User{
     public void setId(Long id){
         this.id=id;
     }
-    public String getFullname
+    public String getFullname(){
+        return fullname;
+    }
+    public void setFullname(String fullname){
+        this.fullname=fullname;
+    }
+    public String getEmail(){
+        return email;
+    }
+    public void setEmail(String Email){
+        this.email=email;
+    }
+    public String getPhone(){
+        return 
+    }
+    }
+    }
+    }
+    }
     }
     }
     }
