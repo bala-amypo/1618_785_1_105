@@ -8,5 +8,9 @@ public class Host{
     private String department;
     private String phone;
     private LocalDateTime createdAt;
-    
+
+    public Host(Long id,String hostname,String fullname,String email,String department,String phone,String createdAt){
+        
+    }
+
 }
