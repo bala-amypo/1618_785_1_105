@@ -40,7 +40,14 @@ public class User{
     public void setPhone(String Phone){
         this.phone=phone;
     }
-    public LocalDateTime get
+    public String getIdProofNumber(){
+        return idProofNumber;
+    }
+    public void setIdProofNumber(String IdProofNumber){
+        this.idproofnumber=idproofnumber;
+    }
+
+    }
     }
 
     }
