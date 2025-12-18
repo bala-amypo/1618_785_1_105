@@ -51,8 +51,8 @@ public class Host{
     public String getPhone(){
         return phone;
     }
-    public void setPhone(String Department){
-        this.department=department;
+    public void setPhone(String Phone){
+        this.phone=phone;
     }
     public LocalDateTime getCreatedAt(){
         return createdAt;
