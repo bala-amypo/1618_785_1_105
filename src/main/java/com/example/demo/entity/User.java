@@ -12,7 +12,19 @@ public class User{
         this.id=id;
         this.fullname=fullname;
         this.email=email;
-        
+        this.phone=phone;
+        this.idProofNumber=idProofNumber;
+        this.createdAt=createdAt;
+    }
+    public Long getId(){
+        return id;
+    }
+    public void setId(Long id){
+        this.id=id;
+    }
+    public String getFullname
+    }
+    }
     }
 
 }
