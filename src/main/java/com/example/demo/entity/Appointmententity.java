@@ -15,8 +15,9 @@ import jakarta.validation.constraints.past;
 @NoArgsConstructor
 @Entity
 
-public class Appointment{
+public class Appointmententity{
     @Id
+    @GeneratedValue(s)
     private Long id;
     private visitor;
     private host;
