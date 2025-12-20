@@ -9,9 +9,9 @@ import jakarta.persistence.Entity;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Host{
     @Id
-    @Entity
     private Long id;
     private String hostName;
     private String fullname;
