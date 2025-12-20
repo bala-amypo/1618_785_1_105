@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
 import java.time.LocalDate;
+import jakarta.validation.constraints.past;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
