@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
+import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
