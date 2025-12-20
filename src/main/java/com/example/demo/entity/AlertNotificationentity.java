@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 public class AlertNotificationentity{
+    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long Id;
