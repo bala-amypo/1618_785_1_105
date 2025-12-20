@@ -4,13 +4,15 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Id;
-import jakarta.persistence,
+import jakarta.persistence.Entity;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 
 
 public class Visitor{
+    @Id
+    @Entity
     private Long id;
     private String fullname;
     private String email;
