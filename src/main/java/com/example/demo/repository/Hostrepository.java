@@ -4,10 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.entity.Hostrepository;
+import com.example.demo.entity.Host;
 
 @Repository
 
-public interface StudentDetailRepository extends JpaRepository<Host,Long>{
+public interface Hostrepository extends JpaRepository<Host,Long>{
 
 }

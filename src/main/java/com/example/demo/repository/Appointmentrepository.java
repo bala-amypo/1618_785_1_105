@@ -4,10 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.entity.;
+import com.example.demo.entity.Appointment;
 
 @Repository
 
-public interface StudentDetailRepository extends JpaRepository<Apointment,Long>{
+public interface Appointmentrepository extends JpaRepository<Appointment,Long>{
 
 }
