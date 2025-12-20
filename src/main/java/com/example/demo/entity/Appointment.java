@@ -16,6 +16,7 @@ public class Appointment{
     private Long id;
     private visitor;
     private host;
+    @Past
     private LocalDate appointmentDate;
     private String purpose;
     private String status;
