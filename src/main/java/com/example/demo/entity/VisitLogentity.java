@@ -16,5 +16,6 @@ public class VisitLog{
       private LocalDateTime checkInTime;
       private LocalDateTime checkOutTime;
       private String purpose;
-      private
+      private Boolean accessGranted;
+      private Boolean alertSent;
 }
