@@ -17,7 +17,7 @@ import jakarta.validation.constraints.past;
 
 public class Appointmententity{
     @Id
-    @GeneratedValue(s)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private visitor;
     private host;

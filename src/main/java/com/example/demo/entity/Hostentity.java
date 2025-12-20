@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+c
 import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Host{
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String hostName;
     private String fullname;
