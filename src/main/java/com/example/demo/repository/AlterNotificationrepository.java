@@ -8,6 +8,6 @@ import com.example.demo.entity.AlterNotification;
 
 @Repository
 
-public interface StudentDetailRepository extends JpaRepository<StudentDetailEntity,Long>{
+public interface AlterNotificationrepository extends JpaRepository<AlterNotification,Long>{
 
 }
