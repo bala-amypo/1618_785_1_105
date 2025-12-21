@@ -18,19 +18,19 @@ public class VisitorController {
     @Autowired
     private VisitorService visitorService;
 
-    // POST /api/visitors - create visitor
+    
     @PostMapping("/api/visitors")
     public Visitor createVisitor(@RequestBody Visitor visitor) {
         return visitorService.createVisitor(visitor);
     }
 
-    // GET /api/visitors - get all visitors
+   
     @GetMapping("/api/visitors")
     public List<Visitor> getAllVisitors() {
         return visitorService.getAllVisitors();
     }
 
-    // GET /api/visitors/{id} - get visitor by id
+    
     @GetMapping("/api/visitors/{id}")
     public Visitor getVisitor(@PathVariable Long id) {
         return visitorService.getVisitor(id);
