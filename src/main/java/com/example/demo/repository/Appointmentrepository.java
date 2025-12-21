@@ -1,13 +1,13 @@
-// package com.example.demo.repository;
+package com.example.demo.repository;
 
-// import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demo.model.Appointment;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-// import org.springframework.stereotype.Repository;
+import java.util.List;
 
-// import com.example.demo.entity.Appointment;
+public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
-// @Repository
+    List<Appointment> findByHostId(Long hostId);
 
-// public interface Appointmentrepository extends JpaRepository<Appointment,Long>{
-
-// }
+    List<Appointment> findByVisitorId(Long visitorId);
+}

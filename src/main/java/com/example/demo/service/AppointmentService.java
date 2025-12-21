@@ -1,19 +1,16 @@
-// package com.example.demo.service;
+package com.example.demo.service;
 
-// import com.example.demo.model.Appointment;
-// import java.util.List;
+import com.example.demo.model.Appointment;
 
-// public interface AppointmentService {
+import java.util.List;
 
-    
-//     Appointment createAppointment(Long visitorId, Long hostId, Appointment appointment);
+public interface AppointmentService {
 
-    
-//     Appointment getAppointment(Long id);
+    Appointment createAppointment(Long visitorId, Long hostId, Appointment appointment);
 
-    
-//     List<Appointment> getAppointmentsForHost(Long hostId);
-     
-    
-//     List<Appointment> getAppointmentsForVisitor(Long visitorId);
-// }
+    Appointment getAppointment(Long id);
+
+    List<Appointment> getAppointmentsForHost(Long hostId);
+
+    List<Appointment> getAppointmentsForVisitor(Long visitorId);
+}
