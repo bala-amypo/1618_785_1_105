@@ -1,10 +1,10 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 import java.time.LocalDate;
 
 @Entity
@@ -13,12 +13,16 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private LocalDate appointmentDate;
+
     private String purpose;
 
     @Column(nullable = false)
-    private String status = "SCHEDULED";
+    private String status;
+
+    // ---------- Getters & Setters ----------
 
     public Long getId() {
         return id;
@@ -27,6 +31,11 @@ public class Appointment {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public LocalDate getAppointmentDate() {
+        return appointmentDate;
+    }
+
     public void setAppointmentDate(LocalDate appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
