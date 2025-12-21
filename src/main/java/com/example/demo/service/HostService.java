@@ -1,16 +1,18 @@
-// package com.example.demo.service;
+package com.example.demo.service;
 
-// import com.example.demo.model.Host;
-// import java.util.List;
+import com.example.demo.model.Host;
 
-// public interface HostService {
+import java.util.List;
 
-    
-//     Host createHost(Host host);
+public interface HostService {
 
-    
-//     Host getHost(Long id);
+    Host createHost(Host host);
 
-    
-//     List<Host> getAllHosts();
-// }
+    Host getHostById(Long id);
+
+    List<Host> getAllHosts();
+
+    Host updateHost(Long id, Host host);
+
+    void deleteHost(Long id);
+}
