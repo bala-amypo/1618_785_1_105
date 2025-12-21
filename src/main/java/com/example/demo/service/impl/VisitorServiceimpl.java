@@ -29,5 +29,5 @@ public class VisitorServiceimpl implements VisitorService {
     @Override
     public List<Visitor> getAllVisitors() {
         return visitorrepository.findAll();
-    }
+    }  
 }
