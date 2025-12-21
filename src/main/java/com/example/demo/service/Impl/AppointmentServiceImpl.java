@@ -1,9 +1,10 @@
-package com.example.demo.service;
+package com.example.demo.service.Impl;
 
 import com.example.demo.model.Appointment;
 import com.example.demo.repository.AppointmentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.service.AppointmentService;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -13,19 +14,21 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
 
-    @Autowired
     public AppointmentServiceImpl(AppointmentRepository appointmentRepository) {
         this.appointmentRepository = appointmentRepository;
     }
 
     @Override
     public Appointment createAppointment(Appointment appointment) {
+
         if (appointment.getAppointmentDate().isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("Appointment date cannot be in the past.");
+            throw new IllegalArgumentException("Appointment date cannot be in the past");
         }
+
         if (appointment.getStatus() == null) {
             appointment.setStatus("SCHEDULED");
         }
+
         return appointmentRepository.save(appointment);
     }
 
@@ -36,35 +39,34 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public Appointment getAppointmentById(Long id) {
-        Optional<Appointment> optionalAppointment = appointmentRepository.findById(id);
-        if (optionalAppointment.isEmpty()) {
+        Optional<Appointment> optional = appointmentRepository.findById(id);
+        if (optional.isEmpty()) {
             throw new RuntimeException("Appointment not found with id: " + id);
         }
-        return optionalAppointment.get();
+        return optional.get();
     }
 
     @Override
     public Appointment updateAppointment(Long id, Appointment appointment) {
-        Appointment existingAppointment = getAppointmentById(id);
+
+        Appointment existing = getAppointmentById(id);
+
         if (appointment.getAppointmentDate() != null) {
             if (appointment.getAppointmentDate().isBefore(LocalDate.now())) {
-                throw new IllegalArgumentException("Appointment date cannot be in the past.");
+                throw new IllegalArgumentException("Appointment date cannot be in the past");
             }
-            existingAppointment.setAppointmentDate(appointment.getAppointmentDate());
+            existing.setAppointmentDate(appointment.getAppointmentDate());
         }
+
         if (appointment.getPurpose() != null) {
-            existingAppointment.setPurpose(appointment.getPurpose());
+            existing.setPurpose(appointment.getPurpose());
         }
+
         if (appointment.getStatus() != null) {
-            existingAppointment.setStatus(appointment.getStatus());
+            existing.setStatus(appointment.getStatus());
         }
-        if (appointment.getVisitor() != null) {
-            existingAppointment.setVisitor(appointment.getVisitor());
-        }
-        if (appointment.getHost() != null) {
-            existingAppointment.setHost(appointment.getHost());
-        }
-        return appointmentRepository.save(existingAppointment);
+
+        return appointmentRepository.save(existing);
     }
 
     @Override
