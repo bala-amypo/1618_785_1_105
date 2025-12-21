@@ -22,7 +22,7 @@ public class Appointment {
     @Column(nullable = false)
     private String status;
 
-    // ---------- Getters & Setters ----------
+    
 
     public Long getId() {
         return id;
