@@ -26,7 +26,7 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    private String role; // ADMIN or USER
+    private String role; 
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -36,7 +36,7 @@ public class User {
         this.createdAt = LocalDateTime.now();
     }
 
-    // ---------- Getters & Setters ----------
+   
 
     public Long getId() {
         return id;
@@ -66,7 +66,7 @@ public class User {
         return password;
     }
 
-    // ⚠️ password stored encrypted
+   
     public void setPassword(String password) {
         this.password = password;
     }

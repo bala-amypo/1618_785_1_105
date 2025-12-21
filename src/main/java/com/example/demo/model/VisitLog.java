@@ -27,7 +27,7 @@ public class VisitLog {
     @Column(nullable = false)
     private Boolean alertSent;
 
-    // Auto-generate check-in time
+    
     @PrePersist
     public void onCreate() {
         this.checkInTime = LocalDateTime.now();
@@ -36,8 +36,7 @@ public class VisitLog {
         }
     }
 
-    // ---------- Getters & Setters ----------
-
+    
     public Long getId() {
         return id;
     }
