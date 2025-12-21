@@ -8,6 +8,6 @@ import com.example.demo.model.Visitor;
 
 @Repository
 
-public interface Visitorrepository extends JpaRepository<Visitor,Long>{
+public interface VisitorRepository extends JpaRepository<Visitor,Long>{
 
 }
