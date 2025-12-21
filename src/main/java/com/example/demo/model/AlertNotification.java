@@ -25,13 +25,13 @@ public class AlertNotification {
     @Column(nullable = false)
     private LocalDateTime sentAt;
 
-    // Auto-generate sentAt
+    
     @PrePersist
     public void onCreate() {
         this.sentAt = LocalDateTime.now();
     }
 
-    // ---------- Getters & Setters ----------
+    
 
     public Long getId() {
         return id;
