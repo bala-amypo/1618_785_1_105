@@ -15,13 +15,11 @@ public class Appointment {
     private Long id;
     @Column(nullable = false)
     private LocalDate appointmentDate;
-
     private String purpose;
 
     @Column(nullable = false)
     private String status = "SCHEDULED";
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
