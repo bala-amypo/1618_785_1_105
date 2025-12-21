@@ -1,6 +1,9 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.*;
+import com.example.demo.model.Appointment;
+import com.example.demo.model.AppointmentStatus;
+import com.example.demo.model.Host;
+import com.example.demo.model.Visitor;
 import com.example.demo.repository.AppointmentRepository;
 import com.example.demo.repository.HostRepository;
 import com.example.demo.repository.VisitorRepository;
@@ -40,10 +43,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         appointment.setVisitor(visitor);
         appointment.setHost(host);
-
-        if (appointment.getStatus() == null) {
-            appointment.setStatus(AppointmentStatus.SCHEDULED);
-        }
+        appointment.setStatus(AppointmentStatus.SCHEDULED);
 
         return appointmentRepository.save(appointment);
     }

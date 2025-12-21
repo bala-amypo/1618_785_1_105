@@ -25,6 +25,7 @@ public class Appointment {
     private String purpose;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private AppointmentStatus status;
 
     @PrePersist
@@ -34,7 +35,7 @@ public class Appointment {
         }
     }
 
-    // Getters and Setters
+    // getters & setters
     public Long getId() {
         return id;
     }
