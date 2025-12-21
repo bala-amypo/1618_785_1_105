@@ -1,9 +1,11 @@
-package com.example.demo.auth;
+package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.example.demo.model.Auth;
+import com.example.demo.service.AuthService;
+
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -15,13 +17,23 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
-        return authService.register(request);
+    @PostMapping
+    public Auth create(@RequestBody Auth auth) {
+        return authService.save(auth);
     }
 
-    @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
-        return authService.login(request);
+    @GetMapping
+    public List<Auth> getAll() {
+        return authService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public Auth getById(@PathVariable Long id) {
+        return authService.getById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        authService.delete(id);
     }
 }

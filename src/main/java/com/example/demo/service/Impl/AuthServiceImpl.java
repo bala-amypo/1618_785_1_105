@@ -1,79 +1,39 @@
-package com.example.demo.auth;
+package com.example.demo.service.Impl;
 
-import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.model.Auth;
+import com.example.demo.repository.AuthRepository;
+import com.example.demo.service.AuthService;
+
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
 
-    public AuthServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AuthServiceImpl(AuthRepository authRepository) {
+        this.authRepository = authRepository;
     }
 
     @Override
-    public String register(RegisterRequest request) {
-
-        if (userRepository.existsByUsername(request.getUsername())) {
-            return "Username already exists";
-        }
-
-        if (userRepository.existsByEmail(request.getEmail())) {
-            return "Email already exists";
-        }
-
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
-        user.setPassword(hashPassword(request.getPassword()));
-        user.setRole(request.getRole() != null ? request.getRole() : "USER");
-
-        userRepository.save(user);
-
-        return "User registered successfully";
+    public Auth save(Auth auth) {
+        return authRepository.save(auth);
     }
 
     @Override
-    public String login(LoginRequest request) {
-
-        Optional<User> optionalUser =
-                userRepository.findAll()
-                        .stream()
-                        .filter(u -> u.getUsername().equals(request.getUsername()))
-                        .findFirst();
-
-        if (optionalUser.isEmpty()) {
-            return "Invalid username or password";
-        }
-
-        User user = optionalUser.get();
-
-        String hashedPassword = hashPassword(request.getPassword());
-
-        if (!user.getPassword().equals(hashedPassword)) {
-            return "Invalid username or password";
-        }
-
-        return "Login successful";
+    public List<Auth> getAll() {
+        return authRepository.findAll();
     }
 
-    private String hashPassword(String password) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hex = new StringBuilder();
-            for (byte b : hash) {
-                hex.append(String.format("%02x", b));
-            }
-            return hex.toString();
-        } catch (Exception e) {
-            throw new RuntimeException("Password encryption failed");
-        }
+    @Override
+    public Auth getById(Long id) {
+        return authRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void delete(Long id) {
+        authRepository.deleteById(id);
     }
 }

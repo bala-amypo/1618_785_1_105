@@ -1,8 +1,15 @@
-package com.example.demo.auth;
+package com.example.demo.service;
+
+import com.example.demo.model.Auth;
+import java.util.List;
 
 public interface AuthService {
 
-    String register(RegisterRequest request);
+    Auth save(Auth auth);
 
-    String login(LoginRequest request);
+    List<Auth> getAll();
+
+    Auth getById(Long id);
+
+    void delete(Long id);
 }
