@@ -1,4 +1,4 @@
-package com.example.demo.service.Impl;
+package com.example.demo.service.impl;
 
 import com.example.demo.model.Visitor;
 import com.example.demo.repository.VisitorRepository;
@@ -23,7 +23,7 @@ public class VisitorServiceImpl implements VisitorService {
     @Override
     public Visitor getVisitor(Long id) {
         return visitorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Visitor not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Visitor not found"));
     }
 
     @Override
