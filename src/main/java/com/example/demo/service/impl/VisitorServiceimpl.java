@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class VisitorServiceImpl implements VisitorService {
+public class VisitorServiceimpl implements VisitorService {
 
     @Autowired
     private VisitorRepository visitorRepository;
