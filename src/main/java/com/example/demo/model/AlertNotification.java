@@ -1,27 +1,67 @@
-// package com.example.demo.entity;
+package com.example.demo.model;
 
-// import lombok.Data;
-// import lombok.AllArgsConstructor;
-// import lombok.NoArgsConstructor;
-// import jakarta.persistence.Id;
-// import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
-// import jakarta.persistence.Entity;
-// import java.time.LocalDate;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.PrePersist;
 
+import java.time.LocalDateTime;
 
-// @Data
-// @AllArgsConstructor
-// @NoArgsConstructor
-// @Entity
-// public class AlertNotificationentity{
-    
-//     @Id
-//     @GeneratedValue(strategy=GenerationType.IDENTITY)
-//     private Long Id;
-//     private visitLog;
-//     private String sentto;
-//     private String alertMessage;
-//     private LocalDateTime sentAt;
+@Entity
+public class AlertNotification {
 
-// }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String sentTo;
+
+    @Column(nullable = false)
+    private String alertMessage;
+
+    @Column(nullable = false)
+    private LocalDateTime sentAt;
+
+    // Auto-generate sentAt
+    @PrePersist
+    public void onCreate() {
+        this.sentAt = LocalDateTime.now();
+    }
+
+    // ---------- Getters & Setters ----------
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSentTo() {
+        return sentTo;
+    }
+
+    public void setSentTo(String sentTo) {
+        this.sentTo = sentTo;
+    }
+
+    public String getAlertMessage() {
+        return alertMessage;
+    }
+
+    public void setAlertMessage(String alertMessage) {
+        this.alertMessage = alertMessage;
+    }
+
+    public LocalDateTime getSentAt() {
+        return sentAt;
+    }
+
+    public void setSentAt(LocalDateTime sentAt) {
+        this.sentAt = sentAt;
+    }
+}
