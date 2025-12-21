@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.Visitor;
-import com.example.demo.repository.VisitorRepository;
+import com.example.demo.repository.Visitorrepository;
 import com.example.demo.service.VisitorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,21 +13,21 @@ import java.util.List;
 public class VisitorServiceimpl implements VisitorService {
 
     @Autowired
-    private VisitorRepository visitorRepository;
+    private Visitorrepository visitorrepository;
 
     @Override
     public Visitor createVisitor(Visitor visitor) {
-        return visitorRepository.save(visitor);
+        return visitorrepository.save(visitor);
     }
 
     @Override
     public Visitor getVisitor(Long id) {
-        return visitorRepository.findById(id)
+        return visitorrepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Visitor not found"));
     }
 
     @Override
     public List<Visitor> getAllVisitors() {
-        return visitorRepository.findAll();
+        return visitorrepository.findAll();
     }
 }
