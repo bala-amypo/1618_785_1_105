@@ -11,13 +11,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "visitor_id")
-    private Visitor visitor;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "host_id")
-    private Host host;
+    
 
     @Column(nullable = false)
     private LocalDate appointmentDate;
@@ -35,7 +29,7 @@ public class Appointment {
         }
     }
 
-    // getters & setters
+    
     public Long getId() {
         return id;
     }
