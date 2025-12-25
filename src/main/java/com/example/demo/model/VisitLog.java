@@ -11,17 +11,14 @@ public class VisitLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String purpose;
+    private boolean accessGranted;
+    private boolean alertSent;
+
     private LocalDateTime checkInTime;
     private LocalDateTime checkOutTime;
 
-    // ---- Constructors ----
     public VisitLog() {}
-
-    public VisitLog(Long id, LocalDateTime checkInTime, LocalDateTime checkOutTime) {
-        this.id = id;
-        this.checkInTime = checkInTime;
-        this.checkOutTime = checkOutTime;
-    }
 
     // ---- Getters & Setters ----
     public Long getId() {
@@ -30,6 +27,30 @@ public class VisitLog {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public boolean getAccessGranted() {
+        return accessGranted;
+    }
+
+    public void setAccessGranted(boolean accessGranted) {
+        this.accessGranted = accessGranted;
+    }
+
+    public boolean getAlertSent() {
+        return alertSent;
+    }
+
+    public void setAlertSent(boolean alertSent) {
+        this.alertSent = alertSent;
     }
 
     public LocalDateTime getCheckInTime() {
