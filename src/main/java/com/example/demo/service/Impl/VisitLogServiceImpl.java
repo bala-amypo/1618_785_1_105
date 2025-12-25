@@ -1,66 +1,45 @@
 package com.example.demo.service.Impl;
 
-import com.example.demo.model.VisitLog;
+import com.example.demo.entity.VisitLog;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.VisitLogRepository;
-import com.example.demo.service.VisitLogService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.time.LocalDateTime;
 
 @Service
-public class VisitLogServiceImpl implements VisitLogService {
+public class VisitLogServiceImpl {
 
-    private final VisitLogRepository visitLogRepository;
+    @Autowired
+    private VisitLogRepository visitLogRepository;
 
-    public VisitLogServiceImpl(VisitLogRepository visitLogRepository) {
-        this.visitLogRepository = visitLogRepository;
-    }
+    public void checkInVisitor(Long visitId) {
+        VisitLog visitLog = visitLogRepository.findById(visitId)
+                .orElseThrow(() -> new ResourceNotFoundException("Visitor not found"));
 
-    @Override
-    public VisitLog createVisitLog(VisitLog visitLog) {
-        if (visitLog.getAlertSent() == null) {
-            visitLog.setAlertSent(false);
-        }
-        return visitLogRepository.save(visitLog);
-    }
-
-    @Override
-    public List<VisitLog> getAllVisitLogs() {
-        return visitLogRepository.findAll();
-    }
-
-    @Override
-    public VisitLog getVisitLogById(Long id) {
-        Optional<VisitLog> optional = visitLogRepository.findById(id);
-        if (optional.isEmpty()) {
-            throw new RuntimeException("VisitLog not found with id: " + id);
-        }
-        return optional.get();
-    }
-
-    @Override
-    public VisitLog updateVisitLog(Long id, VisitLog visitLog) {
-
-        VisitLog existing = getVisitLogById(id);
-
-        if (visitLog.getPurpose() != null) {
-            existing.setPurpose(visitLog.getPurpose());
+        if (visitLog.isCheckedIn()) {
+            throw new IllegalStateException("Visitor already checked in");
         }
 
-        if (visitLog.getAccessGranted() != null) {
-            existing.setAccessGranted(visitLog.getAccessGranted());
-        }
-
-        if (visitLog.getAlertSent() != null) {
-            existing.setAlertSent(visitLog.getAlertSent());
-        }
-
-        return visitLogRepository.save(existing);
+        visitLog.setCheckedIn(true);
+        visitLog.setCheckInTime(LocalDateTime.now());
+        visitLogRepository.save(visitLog);
     }
 
-    @Override
-    public void deleteVisitLog(Long id) {
-        visitLogRepository.deleteById(id);
+    public void checkoutVisitor(Long visitId) {
+        VisitLog visitLog = visitLogRepository.findById(visitId)
+                .orElseThrow(() -> new ResourceNotFoundException("Visitor not found"));
+
+        if (!visitLog.isCheckedIn()) {
+            throw new IllegalStateException("Visitor not checked in");
+        }
+
+        if (visitLog.isCheckedOut()) {
+            throw new IllegalStateException("Visitor already checked out");
+        }
+
+        visitLog.setCheckedOut(true);
+        visitLog.setCheckoutTime(LocalDateTime.now());
+        visitLogRepository.save(visitLog);
     }
 }
