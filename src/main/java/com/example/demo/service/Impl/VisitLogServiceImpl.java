@@ -1,45 +1,40 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.entity.VisitLog;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.VisitLogRepository;
+import com.example.demo.service.VisitLogService;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
-public class VisitLogServiceImpl {
+public class VisitLogServiceImpl implements VisitLogService {
 
-    @Autowired
-    private VisitLogRepository visitLogRepository;
+    private final VisitLogRepository repository;
 
-    public void checkInVisitor(Long visitId) {
-        VisitLog visitLog = visitLogRepository.findById(visitId)
-                .orElseThrow(() -> new ResourceNotFoundException("Visitor not found"));
-
-        if (visitLog.isCheckedIn()) {
-            throw new IllegalStateException("Visitor already checked in");
-        }
-
-        visitLog.setCheckedIn(true);
-        visitLog.setCheckInTime(LocalDateTime.now());
-        visitLogRepository.save(visitLog);
+    public VisitLogServiceImpl(VisitLogRepository repository) {
+        this.repository = repository;
     }
 
-    public void checkoutVisitor(Long visitId) {
-        VisitLog visitLog = visitLogRepository.findById(visitId)
-                .orElseThrow(() -> new ResourceNotFoundException("Visitor not found"));
+    @Override
+    public VisitLog checkIn(Long id) {
+        VisitLog visitLog = repository.findById(id).orElseThrow();
+        visitLog.setCheckedIn(true);
+        visitLog.setCheckInTime(LocalDateTime.now());
+        return repository.save(visitLog);
+    }
 
-        if (!visitLog.isCheckedIn()) {
-            throw new IllegalStateException("Visitor not checked in");
-        }
-
-        if (visitLog.isCheckedOut()) {
-            throw new IllegalStateException("Visitor already checked out");
-        }
-
+    @Override
+    public VisitLog checkOut(Long id) {
+        VisitLog visitLog = repository.findById(id).orElseThrow();
         visitLog.setCheckedOut(true);
         visitLog.setCheckoutTime(LocalDateTime.now());
-        visitLogRepository.save(visitLog);
+        return repository.save(visitLog);
+    }
+
+    @Override
+    public List<VisitLog> getAll() {
+        return repository.findAll();
     }
 }

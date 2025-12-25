@@ -1,52 +1,33 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.VisitLog;
+import com.example.demo.entity.VisitLog;
 import com.example.demo.service.VisitLogService;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/visitlogs")
+@RequestMapping("/visitlog")
 public class VisitLogController {
 
-    private final VisitLogService visitLogService;
+    private final VisitLogService service;
 
-    public VisitLogController(VisitLogService visitLogService) {
-        this.visitLogService = visitLogService;
+    public VisitLogController(VisitLogService service) {
+        this.service = service;
     }
 
-    @PostMapping
-    public VisitLog createVisitLog(@RequestBody VisitLog visitLog) {
-        return visitLogService.createVisitLog(visitLog);
+    @PostMapping("/checkin/{id}")
+    public VisitLog checkIn(@PathVariable Long id) {
+        return service.checkIn(id);
+    }
+
+    @PostMapping("/checkout/{id}")
+    public VisitLog checkOut(@PathVariable Long id) {
+        return service.checkOut(id);
     }
 
     @GetMapping
-    public List<VisitLog> getAllVisitLogs() {
-        return visitLogService.getAllVisitLogs();
-    }
-
-    @GetMapping("/{id}")
-    public VisitLog getVisitLogById(@PathVariable Long id) {
-        return visitLogService.getVisitLogById(id);
-    }
-
-    @PutMapping("/{id}")
-    public VisitLog updateVisitLog(
-            @PathVariable Long id,
-            @RequestBody VisitLog visitLog) {
-        return visitLogService.updateVisitLog(id, visitLog);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteVisitLog(@PathVariable Long id) {
-        visitLogService.deleteVisitLog(id);
+    public List<VisitLog> getAll() {
+        return service.getAll();
     }
 }
