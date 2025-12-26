@@ -13,7 +13,7 @@ public class ValidationUtil {
         this.jwtUtil = jwtUtil;
     }
 
-    public Claims validateTokenAndGetClaims(String token) {
+    public Claims validateToken(String token) {
         try {
             Jws<Claims> jws = jwtUtil.validateAndGetClaims(token);
             return jws.getBody();
