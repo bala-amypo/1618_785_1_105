@@ -2,17 +2,18 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Appointment;
 import com.example.demo.service.AppointmentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/appointments")
 public class AppointmentController {
 
-    @Autowired
-    private AppointmentService appointmentService;
+    private final AppointmentService appointmentService;
+
+    public AppointmentController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
+    }
 
     @PostMapping("/{visitorId}/{hostId}")
     public Appointment create(
@@ -28,13 +29,13 @@ public class AppointmentController {
         return appointmentService.getAppointment(id);
     }
 
-    @GetMapping("/visitor/{visitorId}")
-    public List<Appointment> byVisitor(@PathVariable Long visitorId) {
-        return appointmentService.getAppointmentsForVisitor(visitorId);
-    }
-
     @GetMapping("/host/{hostId}")
     public List<Appointment> byHost(@PathVariable Long hostId) {
         return appointmentService.getAppointmentsForHost(hostId);
+    }
+
+    @GetMapping("/visitor/{visitorId}")
+    public List<Appointment> byVisitor(@PathVariable Long visitorId) {
+        return appointmentService.getAppointmentsForVisitor(visitorId);
     }
 }
