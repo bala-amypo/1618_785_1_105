@@ -1,58 +1,46 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "appointments")
 public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private LocalDate appointmentDate;
 
     private String purpose;
 
-    @Column(nullable = false)
-    private String status;
+    private String status = "SCHEDULED";   // default
 
-    
+    @ManyToOne
+    @JoinColumn(name = "visitor_id")
+    private Visitor visitor;
 
-    public Long getId() {
-        return id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "host_id")
+    private Host host;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // getters & setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public LocalDate getAppointmentDate() {
-        return appointmentDate;
-    }
+    public LocalDate getAppointmentDate() { return appointmentDate; }
+    public void setAppointmentDate(LocalDate appointmentDate) { this.appointmentDate = appointmentDate; }
 
-    public void setAppointmentDate(LocalDate appointmentDate) {
-        this.appointmentDate = appointmentDate;
-    }
+    public String getPurpose() { return purpose; }
+    public void setPurpose(String purpose) { this.purpose = purpose; }
 
-    public String getPurpose() {
-        return purpose;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
-    }
+    public Visitor getVisitor() { return visitor; }
+    public void setVisitor(Visitor visitor) { this.visitor = visitor; }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public Host getHost() { return host; }
+    public void setHost(Host host) { this.host = host; }
 }

@@ -1,67 +1,39 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.PrePersist;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "alert_notifications")
 public class AlertNotification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String sentTo;
-
-    @Column(nullable = false)
     private String alertMessage;
 
-    @Column(nullable = false)
-    private LocalDateTime sentAt;
+    private String sentTo;
 
-    
-    @PrePersist
-    public void onCreate() {
-        this.sentAt = LocalDateTime.now();
-    }
+    private LocalDateTime sentAt = LocalDateTime.now();
 
-    
+    @OneToOne
+    @JoinColumn(name = "visit_log_id")
+    private VisitLog visitLog;
 
-    public Long getId() {
-        return id;
-    }
+    // getters & setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getAlertMessage() { return alertMessage; }
+    public void setAlertMessage(String alertMessage) { this.alertMessage = alertMessage; }
 
-    public String getSentTo() {
-        return sentTo;
-    }
+    public String getSentTo() { return sentTo; }
+    public void setSentTo(String sentTo) { this.sentTo = sentTo; }
 
-    public void setSentTo(String sentTo) {
-        this.sentTo = sentTo;
-    }
+    public LocalDateTime getSentAt() { return sentAt; }
+    public void setSentAt(LocalDateTime sentAt) { this.sentAt = sentAt; }
 
-    public String getAlertMessage() {
-        return alertMessage;
-    }
-
-    public void setAlertMessage(String alertMessage) {
-        this.alertMessage = alertMessage;
-    }
-
-    public LocalDateTime getSentAt() {
-        return sentAt;
-    }
-
-    public void setSentAt(LocalDateTime sentAt) {
-        this.sentAt = sentAt;
-    }
+    public VisitLog getVisitLog() { return visitLog; }
+    public void setVisitLog(VisitLog visitLog) { this.visitLog = visitLog; }
 }
