@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "visitors")
@@ -13,7 +14,8 @@ public class Visitor {
     @Column(nullable = false)
     private String fullName;
 
-    private String email;   // optional
+    @Column(unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String phone;
@@ -21,7 +23,8 @@ public class Visitor {
     @Column(nullable = false)
     private String idProofNumber;
 
-    // getters & setters
+    // Constructors, getters, setters
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
