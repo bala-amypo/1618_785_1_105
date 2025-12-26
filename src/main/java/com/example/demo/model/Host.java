@@ -1,9 +1,9 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "hosts")
 public class Host {
 
     @Id
@@ -11,13 +11,10 @@ public class Host {
     private Long id;
 
     private String hostName;
-
-    @Column(unique = true)
     private String email;
-
     private String phone;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

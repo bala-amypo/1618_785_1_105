@@ -1,29 +1,20 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "visitors")
 public class Visitor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String fullName;
-
-    @Column(unique = true)
     private String email;
-
-    @Column(nullable = false)
     private String phone;
-
-    @Column(nullable = false)
     private String idProofNumber;
-
-    // Constructors, getters, setters
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
