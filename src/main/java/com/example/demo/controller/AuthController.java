@@ -19,19 +19,19 @@ public class AuthController {
         this.userRepository = userRepository;
     }
 
-    // ✅ REGISTER
+    
     @PostMapping("/register")
     public String register(@RequestBody User user) {
 
-        // check duplicate username
+        
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new RuntimeException("Username already exists");
         }
 
-        // encrypt password
+       
         user.setPassword(encoder.encode(user.getPassword()));
 
-        // default role if not provided
+        
         if (user.getRole() == null) {
             user.setRole("USER");
         }
@@ -41,7 +41,7 @@ public class AuthController {
         return "User registered successfully";
     }
 
-    // ✅ LOGIN
+    
     @PostMapping("/login")
     public String login(@RequestBody User user) {
 
