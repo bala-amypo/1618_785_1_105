@@ -1,50 +1,62 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtUtil;
-import com.example.demo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
+    private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        return ResponseEntity.ok(userService.save(user));
+    public AuthController(JwtUtil jwtUtil, UserRepository userRepository) {
+        this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody User request) {
+    // ✅ REGISTER
+    @PostMapping("/register")
+    public String register(@RequestBody User user) {
 
-        User user = userService.findByUsername(request.getUsername())
-                .orElseThrow(() -> new RuntimeException("Invalid username"));
-
-        if (!encoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+        // check duplicate username
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new RuntimeException("Username already exists");
         }
 
-        String token = jwtUtil.generateToken(
-                user.getUsername(),
-                user.getRole(),
-                user.getId(),
-                user.getEmail()
-        );
+        // encrypt password
+        user.setPassword(encoder.encode(user.getPassword()));
 
-        return ResponseEntity.ok(Map.of("token", token));
+        // default role if not provided
+        if (user.getRole() == null) {
+            user.setRole("USER");
+        }
+
+        userRepository.save(user);
+
+        return "User registered successfully";
+    }
+
+    // ✅ LOGIN
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+
+        User dbUser = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+
+        if (!encoder.matches(user.getPassword(), dbUser.getPassword())) {
+            throw new RuntimeException("Invalid credentials");
+        }
+
+        return jwtUtil.generateToken(
+                dbUser.getUsername(),
+                dbUser.getRole(),
+                dbUser.getId(),
+                dbUser.getEmail()
+        );
     }
 }
