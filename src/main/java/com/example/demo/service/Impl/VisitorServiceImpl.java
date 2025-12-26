@@ -4,16 +4,17 @@ import com.example.demo.model.Visitor;
 import com.example.demo.repository.VisitorRepository;
 import com.example.demo.service.VisitorService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
 public class VisitorServiceImpl implements VisitorService {
 
-    @Autowired
     private VisitorRepository visitorRepository;
+
+    public VisitorServiceImpl() {}
+
+    public VisitorServiceImpl(VisitorRepository visitorRepository) {
+        this.visitorRepository = visitorRepository;
+    }
 
     @Override
     public Visitor createVisitor(Visitor visitor) {
@@ -23,7 +24,7 @@ public class VisitorServiceImpl implements VisitorService {
     @Override
     public Visitor getVisitor(Long id) {
         return visitorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Visitor not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Visitor not found"));
     }
 
     @Override

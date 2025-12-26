@@ -2,51 +2,39 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Appointment;
 import com.example.demo.service.AppointmentService;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/appointments")
+@RequestMapping("/api/appointments")
 public class AppointmentController {
 
-    private final AppointmentService appointmentService;
+    @Autowired
+    private AppointmentService appointmentService;
 
-    public AppointmentController(AppointmentService appointmentService) {
-        this.appointmentService = appointmentService;
-    }
+    @PostMapping("/{visitorId}/{hostId}")
+    public Appointment create(
+            @PathVariable Long visitorId,
+            @PathVariable Long hostId,
+            @RequestBody Appointment appointment) {
 
-    @PostMapping
-    public Appointment createAppointment(@RequestBody Appointment appointment) {
-        return appointmentService.createAppointment(appointment);
-    }
-
-    @GetMapping
-    public List<Appointment> getAllAppointments() {
-        return appointmentService.getAllAppointments();
+        return appointmentService.createAppointment(visitorId, hostId, appointment);
     }
 
     @GetMapping("/{id}")
-    public Appointment getAppointmentById(@PathVariable Long id) {
-        return appointmentService.getAppointmentById(id);
+    public Appointment get(@PathVariable Long id) {
+        return appointmentService.getAppointment(id);
     }
 
-    @PutMapping("/{id}")
-    public Appointment updateAppointment(
-            @PathVariable Long id,
-            @RequestBody Appointment appointment) {
-        return appointmentService.updateAppointment(id, appointment);
+    @GetMapping("/visitor/{visitorId}")
+    public List<Appointment> byVisitor(@PathVariable Long visitorId) {
+        return appointmentService.getAppointmentsForVisitor(visitorId);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteAppointment(@PathVariable Long id) {
-        appointmentService.deleteAppointment(id);
+    @GetMapping("/host/{hostId}")
+    public List<Appointment> byHost(@PathVariable Long hostId) {
+        return appointmentService.getAppointmentsForHost(hostId);
     }
 }
