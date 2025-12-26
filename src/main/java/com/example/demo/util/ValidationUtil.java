@@ -1,45 +1,25 @@
-package com.example.demo.security;
+package com.example.demo.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
-import java.util.Date;
+import com.example.demo.security.JwtUtil;
 
-public class JwtUtil {
+public class ValidationUtil {
 
-    // injected via ReflectionTestUtils in tests
-    private String secret;
-    private long jwtExpirationMs;
+    private final JwtUtil jwtUtil;
 
-    public String generateToken(String username,
-                                String role,
-                                Long userId,
-                                String email) {
-
-        return Jwts.builder()
-                .setSubject(username)
-                .claim("role", role)
-                .claim("userId", userId)
-                .claim("email", email)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
-                .signWith(
-                        Keys.hmacShaKeyFor(secret.getBytes()),
-                        SignatureAlgorithm.HS256
-                )
-                .compact();
+    public ValidationUtil(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
     }
 
-    public Jws<Claims> validateAndGetClaims(String token)
-            throws JwtException, IllegalArgumentException {
-
-        return Jwts.parserBuilder()
-                .setSigningKey(secret.getBytes())
-                .build()
-                .parseClaimsJws(token);
+    public Claims validateTokenAndGetClaims(String token) {
+        try {
+            Jws<Claims> claimsJws = jwtUtil.validateAndGetClaims(token);
+            return claimsJws.getBody();
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new RuntimeException("Invalid JWT token", e);
+        }
     }
 }
