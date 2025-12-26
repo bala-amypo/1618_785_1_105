@@ -1,26 +1,45 @@
-package com.example.demo.util;
+package com.example.demo.security;
 
-public class ValidationUtil {
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
-    private ValidationUtil() {
-        // utility class
+import java.util.Date;
+
+public class JwtUtil {
+
+    // injected via ReflectionTestUtils in tests
+    private String secret;
+    private long jwtExpirationMs;
+
+    public String generateToken(String username,
+                                String role,
+                                Long userId,
+                                String email) {
+
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("role", role)
+                .claim("userId", userId)
+                .claim("email", email)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(
+                        Keys.hmacShaKeyFor(secret.getBytes()),
+                        SignatureAlgorithm.HS256
+                )
+                .compact();
     }
 
-    public static void requireNonBlank(String value, String fieldName) {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException(fieldName + " cannot be blank");
-        }
-    }
+    public Jws<Claims> validateAndGetClaims(String token)
+            throws JwtException, IllegalArgumentException {
 
-    public static void requireNonNull(Object obj, String fieldName) {
-        if (obj == null) {
-            throw new IllegalArgumentException(fieldName + " cannot be null");
-        }
-    }
-
-    public static void requirePositive(Long value, String fieldName) {
-        if (value == null || value <= 0) {
-            throw new IllegalArgumentException(fieldName + " must be positive");
-        }
+        return Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes())
+                .build()
+                .parseClaimsJws(token);
     }
 }
