@@ -23,7 +23,7 @@ public class VisitLog {
     private Boolean accessGranted;
     private Boolean alertSent = false;
 
-    /* ===== GETTERS ===== */
+    
     public Long getId() { return id; }
 
     public Visitor getVisitor() { return visitor; }
@@ -40,7 +40,7 @@ public class VisitLog {
 
     public Boolean getAlertSent() { return alertSent; }
 
-    /* ===== SETTERS (INCLUDING MISSING ONE) ===== */
+   
     public void setId(Long id) { this.id = id; }
 
     public void setVisitor(Visitor visitor) { this.visitor = visitor; }

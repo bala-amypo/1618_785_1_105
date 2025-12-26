@@ -17,7 +17,7 @@ public class AlertNotification {
     private String alertMessage;
     private LocalDateTime sentAt;
 
-    /* ===== GETTERS ===== */
+    
     public Long getId() { return id; }
 
     public VisitLog getVisitLog() { return visitLog; }
@@ -28,7 +28,7 @@ public class AlertNotification {
 
     public LocalDateTime getSentAt() { return sentAt; }
 
-    /* ===== SETTERS (MISSING ONES) ===== */
+   
     public void setId(Long id) { this.id = id; }
 
     public void setVisitLog(VisitLog visitLog) {

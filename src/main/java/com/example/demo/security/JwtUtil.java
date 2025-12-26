@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 
-@Component   // ✅ ADD THIS
+@Component   
 public class JwtUtil {
 
     private String secret = "0123456789ABCDEF0123456789ABCDEF";

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Service   // ✅ ADD THIS
+@Service   
 public class AlertNotificationServiceImpl implements AlertNotificationService {
 
     AlertNotificationRepository alertRepository;
