@@ -1,16 +1,13 @@
 package com.example.demo.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
 import java.util.Date;
 
 public class JwtUtil {
 
+    // Injected via ReflectionTestUtils in tests
     private String secret;
     private long jwtExpirationMs;
 
@@ -33,9 +30,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public Jws<Claims> validateAndGetClaims(String token)
-            throws JwtException, IllegalArgumentException {
-
+    public Jws<Claims> validateAndGetClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(secret.getBytes())
                 .build()
