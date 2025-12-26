@@ -2,19 +2,20 @@ package com.example.demo.controller;
 
 import com.example.demo.model.AlertNotification;
 import com.example.demo.service.AlertNotificationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/alerts")
 public class AlertNotificationController {
 
-    @Autowired
-    private AlertNotificationService alertService;
+    private final AlertNotificationService alertService;
 
-    @PostMapping("/{visitLogId}")
+    public AlertNotificationController(AlertNotificationService alertService) {
+        this.alertService = alertService;
+    }
+
+    @PostMapping("/send/{visitLogId}")
     public AlertNotification send(@PathVariable Long visitLogId) {
         return alertService.sendAlert(visitLogId);
     }
@@ -25,7 +26,7 @@ public class AlertNotificationController {
     }
 
     @GetMapping
-    public List<AlertNotification> getAll() {
+    public List<AlertNotification> all() {
         return alertService.getAllAlerts();
     }
 }
