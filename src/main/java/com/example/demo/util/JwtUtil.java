@@ -32,5 +32,5 @@ public class JwtUtil {
                 .setSigningKey(secret.getBytes())
                 .build()
                 .parseClaimsJws(token);
-    }
+    }       
 }
