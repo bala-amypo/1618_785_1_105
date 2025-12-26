@@ -4,12 +4,7 @@ import com.example.demo.model.AlertNotification;
 import java.util.List;
 
 public interface AlertNotificationService {
-
-    AlertNotification createAlert(AlertNotification alertNotification);
-
+    AlertNotification sendAlert(Long visitLogId);
+    AlertNotification getAlert(Long id);
     List<AlertNotification> getAllAlerts();
-
-    AlertNotification getAlertById(Long id);
-
-    void deleteAlert(Long id);
 }

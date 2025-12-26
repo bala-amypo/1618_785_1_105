@@ -3,14 +3,16 @@ package com.example.demo.service.impl;
 import com.example.demo.model.Visitor;
 import com.example.demo.repository.VisitorRepository;
 import com.example.demo.service.VisitorService;
+import com.example.demo.exception.ResourceNotFoundException;
+
+import org.springframework.stereotype.Service;   // ✅ REQUIRED
 
 import java.util.List;
 
+@Service
 public class VisitorServiceImpl implements VisitorService {
 
-    private VisitorRepository visitorRepository;
-
-    public VisitorServiceImpl() {}
+    VisitorRepository visitorRepository;
 
     public VisitorServiceImpl(VisitorRepository visitorRepository) {
         this.visitorRepository = visitorRepository;
@@ -24,7 +26,7 @@ public class VisitorServiceImpl implements VisitorService {
     @Override
     public Visitor getVisitor(Long id) {
         return visitorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Visitor not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Visitor not found"));
     }
 
     @Override
