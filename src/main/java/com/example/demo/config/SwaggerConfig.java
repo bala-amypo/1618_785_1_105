@@ -1,46 +1,34 @@
-package com.example.demo.config;
+package com.example.demo.security;
+
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import io.swagger.v3.oas.models.servers.Server;
+    private final UserRepository userRepository;
 
-@Configuration
-public class SwaggerConfig {
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    public static final String SECURITY_SCHEME_NAME = "bearerAuth";
+    @Override
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
 
-    @Bean
-    public OpenAPI customOpenAPI() {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("User not found"));
 
-        return new OpenAPI()
-                
-                .servers(List.of(
-                        new Server().url("https://9260.pro604cr.amypo.ai/")
-                ))
-
-                
-                .addSecurityItem(
-                        new SecurityRequirement().addList(SECURITY_SCHEME_NAME)
-                )
-
-                
-                .components(
-                        new Components()
-                                .addSecuritySchemes(
-                                        SECURITY_SCHEME_NAME,
-                                        new SecurityScheme()
-                                                .name("Authorization")
-                                                .type(SecurityScheme.Type.HTTP)
-                                                .scheme("bearer")
-                                                .bearerFormat("JWT")
-                                )
-                );
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
+        );
     }
 }
