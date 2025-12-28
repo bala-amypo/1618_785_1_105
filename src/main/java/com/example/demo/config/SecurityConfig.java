@@ -115,22 +115,23 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
 
-                // ✅ Public endpoints (no JWT required)
+                
+                
                 .requestMatchers(
                     "/auth/**",
                     "/swagger-ui/**",
                     "/swagger-ui.html",
                     "/v3/api-docs/**",
-                    "/api/hosts"        // 👈 FIX for 403
+                    "/api/hosts"        
                 ).permitAll()
 
-                // 🔒 Secure all other APIs
+                
                 .requestMatchers("/api/**").authenticated()
 
                 .anyRequest().permitAll()
             )
 
-            // JWT filter
+            
             .addFilterBefore(
                 jwtAuthenticationFilter(),
                 UsernamePasswordAuthenticationFilter.class
