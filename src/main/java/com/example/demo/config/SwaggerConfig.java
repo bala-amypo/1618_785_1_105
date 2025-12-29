@@ -18,7 +18,7 @@ public class SwaggerConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
-
+        
         return new OpenAPI()
                 
                 .servers(List.of(
@@ -31,7 +31,7 @@ public class SwaggerConfig {
                 )
 
                
-               
+
                 .components(
                         new Components()
                                 .addSecuritySchemes(
